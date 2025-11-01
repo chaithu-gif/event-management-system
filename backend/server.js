@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
+const path = require('path'); // ✅ add this
 
 dotenv.config();
 
@@ -15,11 +16,18 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// ✅ Serve static frontend files (HTML, CSS, JS) from the root folder
+app.use(express.static(path.join(__dirname, "../")));
+
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
 
-app.get('/', (req, res) => res.send('Event Management Backend running'));
+// ✅ Serve the main page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, "../index.html"));
+});
 
 const PORT = process.env.PORT || 5000;
 
