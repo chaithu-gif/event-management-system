@@ -23,8 +23,7 @@
       }
 
       try {
-        const res = await fetch("http://localhost:5000/api/auth/register", {
- {
+        const res = await fetch(`${BASE_URL}/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password }),
@@ -35,9 +34,9 @@
         if (res.ok) {
           showMessage(msg, "Account created successfully! Redirecting...", "#7c5cff");
           localStorage.setItem("es_token", data.token);
-          setTimeout(() => (window.location.href = "customer-dashboard.html"), 800);
+          setTimeout(() => (window.location.href = "customer-dashboard.html"), 1000);
         } else {
-          showMessage(msg, data.message || "Signup failed");
+          showMessage(msg, data.msg || "Signup failed");
         }
       } catch (err) {
         console.error(err);
@@ -71,9 +70,9 @@
         if (res.ok) {
           showMessage(msg, "Login successful! Redirecting...", "#7c5cff");
           localStorage.setItem("es_token", data.token);
-          setTimeout(() => (window.location.href = "customer-dashboard.html"), 800);
+          setTimeout(() => (window.location.href = "customer-dashboard.html"), 1000);
         } else {
-          showMessage(msg, data.message || "Invalid credentials");
+          showMessage(msg, data.msg || "Invalid credentials");
         }
       } catch (err) {
         console.error(err);
