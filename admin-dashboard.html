@@ -1,14 +1,88 @@
-<main class="container" style="padding:20px">
-  <h2>Admin Dashboard</h2>
-  <input id="adminSecret" type="password" placeholder="Admin Secret" style="padding:6px;width:200px;margin-bottom:10px;">
-  <button id="btnAddEvent" class="btn">Add Event</button>
-  <button id="exportCSV" class="btn ghost">Export Registrations CSV</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Event Management</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Admin Dashboard-specific styling */
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
 
-  <h3 style="margin-top:20px;">Upcoming Events</h3>
-  <div id="eventsList"></div>
+    .admin-header h2 {
+      color: #fff;
+    }
 
-  <h3 style="margin-top:30px;">Registrations</h3>
-  <div id="regsList"></div>
-</main>
+    .admin-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
 
-<script src="js/admin.js"></script>
+    .event-list, .regs-list {
+      margin-top: 20px;
+    }
+
+    .event-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .event-card strong {
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .event-card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 4px 0;
+    }
+
+    .event-actions button {
+      margin-right: 8px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slideshow"></div>
+
+  <main class="container" style="padding: 40px; position: relative; z-index: 2;">
+    <div class="admin-header">
+      <h2>Admin Dashboard</h2>
+      <div class="admin-controls">
+        <input id="adminSecret" type="password" placeholder="Admin Secret" style="padding:6px;border-radius:8px;border:none;" />
+        <button id="btnAddEvent" class="btn">Add Event</button>
+        <button id="exportCSV" class="btn ghost">Export CSV</button>
+      </div>
+    </div>
+
+    <section class="event-list">
+      <h3 style="color:#fff;">Upcoming Events</h3>
+      <div id="eventsList"></div>
+    </section>
+
+    <section class="regs-list">
+      <h3 style="color:#fff;margin-top:25px;">Registrations</h3>
+      <div id="regsList"></div>
+    </section>
+  </main>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
