@@ -1,55 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - Event Management</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <header>
-    <h1>Admin Dashboard</h1>
-    <p>Manage Upcoming Events</p>
-  </header>
+<main class="container" style="padding:20px">
+  <h2>Admin Dashboard</h2>
+  <input id="adminSecret" type="password" placeholder="Admin Secret" style="padding:6px;width:200px;margin-bottom:10px;">
+  <button id="btnAddEvent" class="btn">Add Event</button>
+  <button id="exportCSV" class="btn ghost">Export Registrations CSV</button>
 
-  <div class="container">
-    <div class="dashboard-actions">
-      <h2>Event List</h2>
-      <button id="addEventBtn">+ Add New Event</button>
-    </div>
+  <h3 style="margin-top:20px;">Upcoming Events</h3>
+  <div id="eventsList"></div>
 
-    <table id="eventTable">
-      <thead>
-        <tr>
-          <th>Event Name</th>
-          <th>Date</th>
-          <th>Location</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Events dynamically loaded here -->
-      </tbody>
-    </table>
+  <h3 style="margin-top:30px;">Registrations</h3>
+  <div id="regsList"></div>
+</main>
 
-    <!-- Add/Edit Event Form -->
-    <div id="eventFormContainer" style="display: none; margin-top: 2rem;">
-      <h2 id="formTitle">Add New Event</h2>
-      <form id="eventForm">
-        <input type="hidden" id="eventId" />
-        <input type="text" id="eventName" placeholder="Event Name" required />
-        <input type="date" id="eventDate" required />
-        <input type="text" id="eventLocation" placeholder="Location" required />
-        <textarea id="eventDescription" placeholder="Description" required></textarea>
-        <div>
-          <button type="submit">Save Event</button>
-          <button type="button" id="cancelBtn">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script src="js/admin.js"></script>
-</body>
-</html>
+<script src="js/admin.js"></script>
