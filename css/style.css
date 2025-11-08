@@ -1,81 +1,41 @@
-/* ===== Background Slideshow ===== */
-.slideshow-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  z-index: -1;
+/* ===== General Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-.slide {
-  position: absolute;
+/* ===== Fullscreen Slideshow Background ===== */
+.slideshow {
+  position: fixed;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
   background-size: cover;
   background-position: center;
-  opacity: 0;
-  animation: slideFade 24s infinite;
-  filter: brightness(0.6) blur(1px);
-  transition: transform 1.5s ease;
+  animation: slideShow 24s infinite linear;
+  filter: brightness(0.8);
 }
 
-.slide:nth-child(1) { animation-delay: 0s; }
-.slide:nth-child(2) { animation-delay: 6s; }
-.slide:nth-child(3) { animation-delay: 12s; }
-.slide:nth-child(4) { animation-delay: 18s; }
-
-@keyframes slideFade {
-  0% { opacity: 0; transform: scale(1); }
-  10% { opacity: 1; transform: scale(1.05); }
-  25% { opacity: 1; transform: scale(1.1); }
-  35% { opacity: 0; transform: scale(1.15); }
-  100% { opacity: 0; transform: scale(1.2); }
-}
-
-/* ===== Banner Overlay ===== */
-#banner {
-  position: relative;
-  height: 100vh;
-  color: white;
-  text-align: center;
-  padding-top: 40vh;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-}
-
-.banner-text {
-  font-size: 2.5rem;
-  animation: fadeInUp 2s ease;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+@keyframes slideShow {
+  0%, 25% {
+    background-image: url("https://www.mbatuts.com/wp-content/uploads/2019/11/Event-Planning-Business-in-plan.jpg");
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  26%, 50% {
+    background-image: url("https://th.bing.com/th/id/R.e819d29e26f625eb0a7997e98d0151b9?rik=w9vvwJESjw9FFg&riu=http%3a%2f%2fwww.exhibitionboothmalaysia.com%2fwp-content%2fuploads%2fEvent-Management-service-AnnualDinner.jpg&ehk=XwrWGwmuaGY8zHm%2bYOooI3YfEpUU2LT8buyW%2fLbZguM%3d&risl=&pid=ImgRaw&r=0");
+  }
+  51%, 75% {
+    background-image: url("https://png.pngtree.com/thumb_back/fw800/background/20240704/pngtree-new-event-management-outdoor-background-image_15957681.jpg");
+  }
+  76%, 100% {
+    background-image: url("https://th.bing.com/th/id/OIP.umxw1LVdnDUH7Mw8Xyn63wHaE7?w=278&h=185&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3");
   }
 }
 
-.cta-btn {
-  padding: 12px 24px;
-  background: #00b4d8;
-  color: #fff;
-  border-radius: 30px;
-  text-decoration: none;
-  transition: 0.3s;
-  display: inline-block;
-  margin-top: 15px;
-}
-.cta-btn:hover {
-  background: #0077b6;
-}
-
-/* ===== Header & Nav ===== */
+/* ===== Header ===== */
 header {
   position: fixed;
   top: 0;
@@ -84,9 +44,15 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(6px);
+  background: transparent;
   z-index: 10;
+}
+
+header .site-title {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 header nav a {
@@ -94,46 +60,67 @@ header nav a {
   margin-left: 20px;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s;
+  transition: all 0.3s ease;
 }
 
 header nav a:hover {
   color: #00b4d8;
+  text-shadow: 0 0 10px #00b4d8;
 }
 
 .btn {
   padding: 8px 18px;
-  background: #00b4d8;
+  background: linear-gradient(90deg, #00b4d8, #0077b6);
   color: #fff;
   border-radius: 20px;
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px #00b4d8;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px #00b4d8;
+}
+
+.hero p {
+  font-size: 1.3em;
+  margin-bottom: 25px;
 }
 
 /* ===== Footer ===== */
 footer {
   text-align: center;
-  color: #fff;
-  padding: 20px 0;
-  background: rgba(0, 0, 0, 0.5);
-  position: relative;
+  color: white;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
 }
 
-.social-icons img {
-  width: 24px;
+.footer-icons img {
+  width: 30px;
   margin: 0 8px;
-  filter: brightness(0) invert(1);
-  transition: transform 0.3s;
+  transition: 0.3s;
+  filter: brightness(0.9);
 }
 
-.social-icons img:hover {
+.footer-icons img:hover {
   transform: scale(1.2);
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .banner-text {
-    font-size: 1.8rem;
-  }
-  header nav a {
-    margin-left: 10px;
-  }
+  filter: brightness(1.2);
 }
