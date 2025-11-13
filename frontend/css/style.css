@@ -295,3 +295,169 @@ footer {
   justify-content: center;
   margin-top: 20px;
 }
+.full-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+
+/* Navigation bar (same style as home) */
+.navbar {
+  width: 100%;
+  padding: 20px 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar nav a {
+  margin-left: 20px;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.navbar nav a.active {
+  text-decoration: underline;
+}
+.vertical-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;      /* spacing between every element */
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+}
+
+/* make the subtype layout a responsive grid */
+.event-subtype-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* each event box */
+.event-card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  background-image: url("https://www.transparenttextures.com/patterns/mosaic.png");
+  background-size: cover;
+  color: #222;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* inside each box */
+.event-card h3 {
+  color: #b30000;
+  margin: 15px 0 10px;
+  text-align: center;
+}
+
+.event-card img {
+  width: 100%;
+  height: 250px;
+  border-radius: 15px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.event-card .btn {
+  display: block;
+  margin: 10px auto;
+  background: #b30000;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.event-card .btn:hover {
+  background: #8c0000;
+}
+/* Individual service boxes inside each event */
+.service-package {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-top: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-package:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.service-package h4 {
+  color: #b30000;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.service-package ul,
+.service-package p {
+  text-align: left;
+  line-height: 1.6;
+}
+
+.service-package .btn {
+  display: block;
+  margin: 15px auto 0;
+  background: #b30000;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.service-package .btn:hover {
+  background: #8c0000;
+}
+
+.service-packages {
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+}
+
+.backBtn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-top: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.backBtn:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}

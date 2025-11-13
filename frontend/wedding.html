@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Events | Event Management</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Background slideshow */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      animation: weddingSlide 20s infinite alternate ease-in-out;
+      z-index: -1;
+      filter: brightness(0.5);
+    }
+
+    @keyframes weddingSlide {
+      0% { background-image: url('https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg'); }
+      33% { background-image: url('https://images.pexels.com/photos/265947/pexels-photo-265947.jpeg'); }
+      66% { background-image: url('https://images.pexels.com/photos/169189/pexels-photo-169189.jpeg'); }
+      100% { background-image: url('https://images.pexels.com/photos/230290/pexels-photo-230290.jpeg'); }
+    }
+
+    header.navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: rgba(0, 0, 0, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .site-title {
+      color: #ffcccc;
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff6666;
+    }
+
+    .event-info {
+      text-align: center;
+      margin: 60px 20px 30px;
+    }
+
+    .event-info h2 {
+      font-size: 2em;
+      color: #ffcccc;
+    }
+
+    .event-info p {
+      color: #f1f1f1;
+      font-size: 1.1em;
+    }
+
+    .event-subtype-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      padding: 20px;
+    }
+
+    .event-card {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      overflow: hidden;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    .event-card:hover {
+      transform: scale(1.05);
+    }
+
+    .event-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .event-card h3 {
+      color: #ffcccc;
+      margin: 15px 0 5px;
+    }
+
+    .event-card p {
+      color: #ddd;
+      font-size: 0.95em;
+      padding: 0 10px;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      background: #b30000;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 15px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #8c0000;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <h1 class="site-title">Wedding Events</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="event-info">
+    <h2>Choose Your Wedding Type</h2>
+    <p>Select your preferred wedding style to explore detailed service packages.</p>
+  </div>
+
+  <div class="event-subtype-container">
+    <div class="event-card">
+      <img src="https://th.bing.com/th/id/OIP.RrprgMFi6xWiXzzTwrEReQHaLG?w=186&h=279&c=7&r=0&o=7&cb=ucfimg2&dpr=1.3&pid=1.7&rm=3&ucfimg=1" alt="Church Wedding">
+      <h3>Church Wedding</h3>
+      <p>Elegant and traditional church wedding with decor and choir.</p>
+      <button class="btn" onclick="window.location.href='church-wedding.html'">View Packages</button>
+    </div>
+
+    <div class="event-card">
+      <img src="https://www.bing.com/th/id/OIP.OEmYPOKZ7W6GdcS9PUjf8QHaCq?w=272&h=211&c=8&rs=1&qlt=90&o=6&cb=ucfimg1&dpr=1.3&pid=3.1&rm=2&ucfimg=1" alt="Kerala Wedding">
+      <h3>Kerala Wedding</h3>
+      <p>Traditional Kerala-style wedding with authentic rituals and decor.</p>
+      <button class="btn" onclick="window.location.href='kerala-wedding.html'">View Packages</button>
+    </div>
+
+    <div class="event-card">
+      <img src="https://www.bing.com/th/id/OIP.6OUVIaCy1O2CNY72qtitiwHaE7?w=167&h=211&c=8&rs=1&qlt=90&o=6&cb=ucfimg1&dpr=1.3&pid=3.1&rm=2&ucfimg=1" alt="Beach Wedding">
+      <h3>Beach Wedding</h3>
+      <p>Beautiful beach weddings with sunset setups and floral backdrops.</p>
+      <button class="btn" onclick="window.location.href='beach-wedding.html'">View Packages</button>
+    </div>
+    
+  </div>
+
+</body>
+</html>

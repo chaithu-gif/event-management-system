@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Events | Event Management</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://images.pexels.com/photos/3183186/pexels-photo-3183186.jpeg') no-repeat center center/cover;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      backdrop-filter: brightness(0.8) blur(2px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+    }
+
+    header.navbar {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header.navbar h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffb3b3;
+    }
+
+    .event-info {
+      background: rgba(255, 255, 255, 0.75);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 40px;
+      width: 80%;
+      max-width: 800px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .event-info h2 {
+      color: #b30000;
+      margin-bottom: 10px;
+    }
+
+    .event-info p {
+      color: #333;
+      font-size: 16px;
+    }
+
+    .event-subtype-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin: 40px 0;
+      width: 90%;
+    }
+
+    .event-card {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      width: 300px;
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(3px);
+    }
+
+    .event-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .event-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .event-card h3 {
+      color: #b30000;
+      margin-top: 15px;
+    }
+
+    .event-card p {
+      color: #333;
+      padding: 10px 15px;
+      font-size: 15px;
+    }
+
+    .btn {
+      background: #b30000;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 20px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #8c0000;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <h1 class="site-title">Corporate Events</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="event-info">
+    <h2>Choose Your Corporate Event Type</h2>
+    <p>Select your preferred event type to explore detailed service packages.</p>
+  </div>
+
+  <div class="event-subtype-container">
+    <div class="event-card">
+      <img src="https://www.bing.com/th/id/OIP.9gcBCyRyAKeb1VM1910ldwHaE8?w=263&h=211&c=8&rs=1&qlt=90&o=6&cb=ucfimg1&dpr=1.3&pid=3.1&rm=2&ucfimg=1" alt="Seminar">
+      <h3>Conference / Seminar</h3>
+      <p>Professional events designed to share knowledge, foster networking, and inspire collaboration.</p>
+      <button class="btn" onclick="window.location.href='seminar.html'">View Packages</button>
+    </div>
+
+    <div class="event-card">
+      <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" alt="Product Launch">
+      <h3>Product Launch</h3>
+      <p>Engaging launches that showcase your product to clients, media, and stakeholders with maximum impact.</p>
+      <button class="btn" onclick="window.location.href='product-launch.html'">View Packages</button>
+    </div>
+
+    <div class="event-card">
+      <img src="https://images.pexels.com/photos/1181372/pexels-photo-1181372.jpeg" alt="Annual Gathering">
+      <h3>Annual Gathering</h3>
+      <p>Memorable celebrations that reward employees and strengthen team spirit.</p>
+      <button class="btn" onclick="window.location.href='annual-gathering.html'">View Packages</button>
+    </div>
+  </div>
+
+</body>
+</html>

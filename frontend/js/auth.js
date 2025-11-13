@@ -9,41 +9,46 @@
   }
 
   // SIGNUP
-  const doSignupBtn = document.getElementById("doSignup");
-  if (doSignupBtn) {
-    doSignupBtn.addEventListener("click", async () => {
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("su_email").value.trim();
-      const password = document.getElementById("su_password").value.trim();
-      const msg = document.getElementById("signupMsg");
+  // SIGNUP
+const doSignupBtn = document.getElementById("doSignup");
+if (doSignupBtn) {
+  doSignupBtn.addEventListener("click", async () => {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("su_email").value.trim();
+    const password = document.getElementById("su_password").value.trim();
+    const msg = document.getElementById("signupMsg");
 
-      if (!name || !email || !password) {
-        showMessage(msg, "Please fill all fields");
-        return;
+    if (!name || !email || !password) {
+      showMessage(msg, "Please fill all fields");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        showMessage(msg, "Account created successfully! Redirecting...", "#7c5cff");
+
+        localStorage.setItem("es_token", data.token);
+
+        // ✅ redirect to HOME PAGE instead of login or dashboard
+        setTimeout(() => (window.location.href = "index.html"), 1000);
+      } else {
+        showMessage(msg, data.msg || "Signup failed");
       }
+    } catch (err) {
+      console.error(err);
+      showMessage(msg, "Server error, please try again later");
+    }
+  });
+}
 
-      try {
-        const res = await fetch(`${BASE_URL}/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          showMessage(msg, "Account created successfully! Redirecting...", "#7c5cff");
-          localStorage.setItem("es_token", data.token);
-          setTimeout(() => (window.location.href = "customer-dashboard.html"), 1000);
-        } else {
-          showMessage(msg, data.msg || "Signup failed");
-        }
-      } catch (err) {
-        console.error(err);
-        showMessage(msg, "Server error, please try again later");
-      }
-    });
-  }
 
   // LOGIN
   const doLoginBtn = document.getElementById("doLogin");

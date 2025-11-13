@@ -4,20 +4,31 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Signup | Event Management</title>
-  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
 
-  <!-- Same slideshow background as home -->
+  <!-- Background Slideshow -->
   <div class="slideshow">
     <div class="slide" style="background-image: url('images/bg1.jpg');"></div>
     <div class="slide" style="background-image: url('images/bg2.jpg');"></div>
     <div class="slide" style="background-image: url('images/bg3.jpg');"></div>
   </div>
 
-  <!-- Signup Form -->
-  <main class="auth-container">
-    <div class="auth-card">
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="logo">Event Management</div>
+    <nav>
+      <a href="index.html">Home</a>
+      
+      <a href="signup.html" class="active">Signup</a>
+    </nav>
+  </header>
+
+  <!-- Centered Form -->
+  <main class="auth-container full-center">
+    <div class="auth-card vertical-stack">
       <h2>Create Your Account</h2>
       <p>Sign up to start managing your events easily.</p>
 
@@ -26,12 +37,13 @@
       <input id="su_password" type="password" placeholder="Password" />
 
       <button id="doSignup" class="btn">Create Account</button>
-      <button class="btn ghost" onclick="location.href='login.html'">Back</button>
+      <button class="btn ghost" onclick="location.href='index.html'">Back</button>
 
       <p id="signupMsg" class="muted"></p>
     </div>
   </main>
 
   <script src="js/auth.js"></script>
+
 </body>
 </html>

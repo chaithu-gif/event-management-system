@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adult Birthday Party Packages | Event Management</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&w=1600') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .packages-container {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .service-package {
+      background: rgba(0, 0, 0, 0.6); /* semi-transparent black for contrast */
+      border: 2px solid #ffcc00;
+      border-radius: 15px;
+      padding: 25px;
+      width: 300px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: left;
+    }
+
+    .service-package:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #ffcc00;
+    }
+
+    .service-package h4 {
+      color: #ffcc00;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 1.4em;
+    }
+
+    .service-package h5 {
+      color: #ff9900;
+      margin-top: 15px;
+    }
+
+    .service-package ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .service-package li {
+      margin: 6px 0;
+    }
+
+    .service-package p {
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .btn {
+      display: block;
+      background: #ffcc00;
+      color: #000;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 15px auto 0;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #ffaa00;
+    }
+
+    .back-btn {
+      margin-top: 40px;
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Adult Birthday Party Packages</h1>
+
+  <div class="packages-container">
+    <div class="service-package">
+      <h4>Basic Party Package</h4>
+      <ul>
+        <li>Guest Count: Up to 50</li>
+        <li>Venue Setup: Simple décor with seating and music system</li>
+        <li>Activities Covered: Casual dinner, small toast, and cake cutting</li>
+        <li>Catering: Finger foods, snacks, and beverages</li>
+        <li>Photography: 1 photographer</li>
+        <li>Duration: Half-day event</li>
+      </ul>
+      <h5>Estimated Expenses</h5>
+      <ul>
+        <li>Venue: ₹25,000</li>
+        <li>Décor & Setup: ₹10,000</li>
+        <li>Catering: ₹10,000</li>
+        <li>Photography: ₹5,000</li>
+      </ul>
+      <p><strong>Total: ₹50,000</strong></p>
+      <button class="btn" onclick="window.location.href='payment.html'">Register Now</button>
+    </div>
+
+    <div class="service-package">
+      <h4>Standard Party Package</h4>
+      <ul>
+        <li>Guest Count: 50–150</li>
+        <li>Venue Setup: Themed décor, stage, lighting, and seating</li>
+        <li>Activities Covered: DJ session, dance floor, and cake cutting ceremony</li>
+        <li>Catering: Multi-cuisine buffet and beverages</li>
+        <li>Photography: 2 photographers + candid coverage</li>
+        <li>Duration: 1-day event</li>
+      </ul>
+      <h5>Estimated Expenses</h5>
+      <ul>
+        <li>Venue: ₹50,000</li>
+        <li>Décor & Setup: ₹25,000</li>
+        <li>Catering: ₹40,000</li>
+        <li>Photography: ₹20,000</li>
+      </ul>
+      <p><strong>Total: ₹1,35,000</strong></p>
+      <button class="btn" onclick="window.location.href='payment.html'">Register Now</button>
+    </div>
+
+    <div class="service-package">
+      <h4>Premium Party Package</h4>
+      <ul>
+        <li>Guest Count: 150–300+</li>
+        <li>Venue Setup: Premium stage, lighting, custom décor, photo booth</li>
+        <li>Activities Covered: DJ, live band, dance floor, interactive games, and cake cutting</li>
+        <li>Catering: Multi-cuisine buffet with gourmet options</li>
+        <li>Photography: Full professional coverage + video montage</li>
+        <li>Duration: 1–2 days</li>
+      </ul>
+      <h5>Estimated Expenses</h5>
+      <ul>
+        <li>Venue: ₹1,00,000</li>
+        <li>Décor & Setup: ₹50,000</li>
+        <li>Catering: ₹60,000</li>
+        <li>Photography & Videography: ₹40,000</li>
+      </ul>
+      <p><strong>Total: ₹2,50,000</strong></p>
+      <button class="btn" onclick="window.location.href='payment.html'">Register Now</button>
+    </div>
+  </div>
+
+  <button onclick="window.location.href='birthday.html'" class="back-btn">⬅ Back to Birthday Events</button>
+</body>
+</html>
