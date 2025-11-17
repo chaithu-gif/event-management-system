@@ -1,5 +1,16 @@
 // js/admin.js
 // Admin actions: add event (calls backend), list registrations (from localStorage demo), export CSV
+// 🔒 Protect Admin Dashboard
+document.addEventListener("DOMContentLoaded", () => {
+  const admin = JSON.parse(localStorage.getItem("loggedAdmin"));
+
+  if (!admin) {
+    // Not logged in → return to login page
+    window.location.href = "admin-login.html";
+    return;
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   const btnAdd = document.getElementById('btnAddEvent');
   const exportCSV = document.getElementById('exportCSV');
