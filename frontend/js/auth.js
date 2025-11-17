@@ -61,7 +61,7 @@
         showMessage(msg, "Invalid email or password");
         return;
       }
-
+ localStorage.setItem("loggedInUser", JSON.stringify(found));
       showMessage(msg, "Login successful! Redirecting...", "#7c5cff");
 
       setTimeout(() => (window.location.href = "customer-dashboard.html"), 1200);
