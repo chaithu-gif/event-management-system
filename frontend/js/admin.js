@@ -1,107 +1,82 @@
 // js/admin.js
+
+// ---------------------------
+// Admin login credentials
+// ---------------------------
+const ADMIN_CREDENTIALS = {
+  email: "admin@eventsphere.com",
+  password: "admin123",
+  secret: "event$phere2025"
+};
+
+// ---------------------------
+// Login Page Handling
+// ---------------------------
 document.addEventListener("DOMContentLoaded", () => {
-
-  // ------------------------------
-  // CONFIG: Admin Credentials
-  // ------------------------------
-  const ADMIN_EMAIL = "admin@eventsphere.com";
-  const ADMIN_PASSWORD = "admin123";
-  const ADMIN_SECRET = "event$phere2025";
-
-  const currentPage = window.location.pathname.split("/").pop();
-
-  // ------------------------------
-  // ADMIN LOGIN PAGE
-  // ------------------------------
-  if (currentPage === "admin-login.html") {
-    const form = document.getElementById("adminLoginForm");
-    const emailInput = document.getElementById("adminEmail");
-    const passwordInput = document.getElementById("adminPassword");
-    const secretInput = document.getElementById("adminSecret");
-    const msg = document.getElementById("adminMsg");
-
-    form.addEventListener("submit", (e) => {
+  const loginForm = document.querySelector(".login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      const email = loginForm.querySelector('input[type="email"]').value.trim();
+      const password = loginForm.querySelector('input[type="password"]').value.trim();
+      const secret = loginForm.querySelector('input[type="text"]').value.trim();
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-      const secret = secretInput.value.trim();
-
-      if (!email || !password || !secret) {
-        msg.style.color = "red";
-        msg.textContent = "All fields are required!";
-        return;
+      if (
+        email === ADMIN_CREDENTIALS.email &&
+        password === ADMIN_CREDENTIALS.password &&
+        secret === ADMIN_CREDENTIALS.secret
+      ) {
+        // Save login session in localStorage
+        localStorage.setItem("loggedAdmin", JSON.stringify({ email }));
+        // Redirect to dashboard
+        window.location.href = "admin-dashboard.html";
+      } else {
+        alert("Invalid credentials. Please try again.");
       }
-
-      if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
-        msg.style.color = "red";
-        msg.textContent = "Invalid email or password!";
-        return;
-      }
-
-      if (secret !== ADMIN_SECRET) {
-        msg.style.color = "red";
-        msg.textContent = "Invalid secret passkey!";
-        return;
-      }
-
-      localStorage.setItem("loggedAdmin", JSON.stringify({ email: ADMIN_EMAIL }));
-      msg.style.color = "green";
-      msg.textContent = "Login successful! Redirecting...";
-
-      setTimeout(() => window.location.href = "admin-dashboard.html", 800);
     });
-
-    return; // Skip dashboard logic if on login page
+    return; // Stop further code on login page
   }
 
-  // ------------------------------
-  // ADMIN DASHBOARD PAGE
-  // ------------------------------
+  // ---------------------------
+  // Dashboard Protection
+  // ---------------------------
   const admin = JSON.parse(localStorage.getItem("loggedAdmin"));
   if (!admin) {
+    // Not logged in → redirect to login page
     window.location.href = "admin-login.html";
     return;
   }
 
-  // Logout button
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("loggedAdmin");
-      window.location.href = "admin-login.html";
-    });
-  }
-
-  // ------------------------------
-  // Dashboard actions
-  // ------------------------------
+  // ---------------------------
+  // Dashboard Features
+  // ---------------------------
   const btnAdd = document.getElementById('btnAddEvent');
   const exportCSV = document.getElementById('exportCSV');
   const genQR = document.getElementById('genQR');
   const regsList = document.getElementById('regsList');
 
-  function loadRegsUI() {
+  function loadRegsUI(){
     const regs = JSON.parse(localStorage.getItem('es_regs') || '[]');
-    regsList.innerHTML = regs.length
-      ? regs.map(r => `<div class="card" style="margin-bottom:8px"><strong>${r.eventName}</strong>
-        <div style="font-size:13px;color:var(--muted)">${r.name} • ${r.email} • ${r.status}</div></div>`).join('')
+    regsList.innerHTML = regs.length 
+      ? regs.map(r => `<div class="card" style="margin-bottom:8px">
+          <strong>${r.eventName}</strong>
+          <div style="font-size:13px;color:var(--muted)">${r.name} • ${r.email} • ${r.status}</div>
+        </div>`).join('')
       : '<p style="color:var(--muted)">No registrations yet.</p>';
   }
   loadRegsUI();
 
-  // Add Event
+  // Add Event Button
   btnAdd.addEventListener('click', async () => {
-    const secret = (document.getElementById('adminSecret') || {}).value || '';
+    const secret = document.getElementById('adminSecret').value || '';
     const title = prompt('Event title (demo)');
     if (!title) return;
-
     const payload = { title, date: '2026-01-01', price: 199, image: 'https://picsum.photos/seed/new/600/400' };
 
     try {
       const res = await fetch('/api/events', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-secret': secret },
+        method:'POST',
+        headers: {'Content-Type':'application/json','x-admin-secret':secret},
         body: JSON.stringify(payload)
       });
       if (res.ok) {
@@ -127,15 +102,14 @@ document.addEventListener("DOMContentLoaded", () => {
   exportCSV.addEventListener('click', () => {
     const regs = JSON.parse(localStorage.getItem('es_regs') || '[]');
     if (!regs.length) { alert('No registrations'); return; }
-
-    const hdr = ['id', 'eventId', 'eventName', 'name', 'email', 'status'];
-    const csv = [hdr.join(',')].concat(
-      regs.map(r => [r.id, r.eventId, r.eventName, r.name, r.email, r.status].map(c => `"${String(c).replace(/"/g, '""')}"`).join(','))
-    ).join('\n');
-
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const hdr = ['id','eventId','eventName','name','email','status'];
+    const csv = [hdr.join(',')]
+      .concat(regs.map(r => [r.id,r.eventId,r.eventName,r.name,r.email,r.status]
+        .map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')))
+      .join('\n');
+    const blob = new Blob([csv], {type:'text/csv'}); 
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = 'registrations.csv'; a.click();
+    const a = document.createElement('a'); a.href = url; a.download = 'registrations.csv'; a.click(); 
     URL.revokeObjectURL(url);
   });
 
@@ -148,5 +122,4 @@ document.addEventListener("DOMContentLoaded", () => {
     const w = window.open('', '_blank', 'width=260,height=320');
     w.document.write(`<img src="${img}" alt="qr"><p style="font-family:Inter,Arial">${url}</p>`);
   });
-
 });
