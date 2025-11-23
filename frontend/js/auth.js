@@ -1,14 +1,13 @@
 (async () => {
+  const BASE_URL = "http://localhost:5000/api/user";
 
-  // FIXED BACKEND URL FOR LOCAL DEVELOPMENT
-  const BASE_URL = "http://localhost:5000/api/auth";
-
+  // Helper to show messages
   function showMessage(el, msg, color = "red") {
     el.style.color = color;
     el.textContent = msg;
   }
 
-  // ========== SIGNUP ==========
+  // ========================= SIGNUP =========================
   const doSignupBtn = document.getElementById("doSignup");
   if (doSignupBtn) {
     doSignupBtn.addEventListener("click", async (e) => {
@@ -32,30 +31,29 @@
         });
 
         const data = await res.json();
-        console.log("Signup Response:", data);
 
-        if (res.ok && data.token) {
-          showMessage(msg, "Signup successful! Redirecting...", "green");
+        if (res.ok) {
+          showMessage(msg, "Signup successful! Redirecting...", "#7c5cff");
 
+          // Save login data
           localStorage.setItem("es_token", data.token);
-          localStorage.setItem("user_role", data.user.role);
+          localStorage.setItem("user_id", data.user.id);
+          localStorage.setItem("user_name", data.user.name);
+          localStorage.setItem("user_email", data.user.email);
 
-          setTimeout(() => {
-            window.location.href =
-              data.user.role === "admin" ? "admin-dashboard.html" : "customer-dashboard.html";
-          }, 1000);
-
+          // Always redirect to customer-dashboard
+          setTimeout(() => (window.location.href = "customer-dashboard.html"), 800);
         } else {
           showMessage(msg, data.msg || "Signup failed");
         }
       } catch (err) {
         console.error(err);
-        showMessage(msg, "Server error, try later");
+        showMessage(msg, "Server error");
       }
     });
   }
 
-  // ========== LOGIN ==========
+  // ========================= LOGIN =========================
   const doLoginBtn = document.getElementById("doLogin");
   if (doLoginBtn) {
     doLoginBtn.addEventListener("click", async (e) => {
@@ -78,23 +76,22 @@
         });
 
         const data = await res.json();
-        console.log("Login Response:", data);
 
-        if (res.ok && data.token) {
-          showMessage(msg, "Login successful! Redirecting...", "green");
+        if (res.ok) {
+          showMessage(msg, "Login successful! Redirecting...", "#7c5cff");
 
+          // Save login data
           localStorage.setItem("es_token", data.token);
-          localStorage.setItem("user_role", data.user.role);
+          localStorage.setItem("user_id", data.user.id);
+          localStorage.setItem("user_name", data.user.name);
+          localStorage.setItem("user_email", data.user.email);
 
-          setTimeout(() => {
-            window.location.href =
-              data.user.role === "admin" ? "admin-dashboard.html" : "customer-dashboard.html";
-          }, 1000);
+          // Always redirect customer
+          setTimeout(() => (window.location.href = "customer-dashboard.html"), 800);
 
         } else {
-          showMessage(msg, data.msg || "Invalid email or password");
+          showMessage(msg, data.msg || "Invalid credentials");
         }
-
       } catch (err) {
         console.error(err);
         showMessage(msg, "Server error");
