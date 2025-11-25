@@ -27,16 +27,30 @@
     </form>
   </section>
 
-  <script src="js/admin.js"></script>
-
-  <!-- Redirect to admin-dashboard after login -->
   <script>
-    const adminLoginForm = document.getElementById('adminLoginForm');
-    adminLoginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      // Simple redirect; replace with real authentication later
+  const adminLoginForm = document.getElementById('adminLoginForm');
+
+  adminLoginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const email = adminLoginForm.querySelector('input[type="email"]').value;
+    const password = adminLoginForm.querySelector('input[type="password"]').value;
+    const passkey = adminLoginForm.querySelector('input[type="text"]').value;
+
+    // Hardcoded admin credentials (change later when backend is added)
+    const ADMIN_EMAIL = "admin@eventsphere.com";
+    const ADMIN_PASSWORD = "admin123";
+    const SECRET_PASSKEY = "EVENT@2025";
+
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD && passkey === SECRET_PASSKEY) {
+      // Success → Redirect
       window.location.href = 'admin-dashboard.html';
-    });
-  </script>
+    } else {
+      // Failed → Show alert
+      alert("Invalid email, password, or secret passkey!");
+    }
+  });
+</script>
+
 </body>
 </html>
