@@ -180,36 +180,4 @@
 </html>
 
   </script>
-  <script src="js/template-loader.js"></script>
-  // If opened with ?id=<eventId>, load event data from API and render dynamic content
-  (async function(){
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
-      if (!id) return;
-      const res = await fetch('/api/events/' + encodeURIComponent(id));
-      if (!res.ok) return;
-      const ev = await res.json();
-      // replace main info
-      const h2 = document.querySelector('.event-info h2');
-      const p = document.querySelector('.event-info p');
-      if (h2) h2.textContent = ev.title || h2.textContent;
-      if (p) p.textContent = ev.description || p.textContent;
-      // replace cards area with event packages
-      const container = document.querySelector('.event-subtype-container');
-      if (!container) return;
-      container.innerHTML = '';
-      const pkgs = ev.packages || [];
-      if (!pkgs.length) {
-        container.innerHTML = '<div style="color:#fff">No packages for this event.</div>';
-        return;
-      }
-      pkgs.forEach(pac => {
-        const card = document.createElement('div');
-        card.className = 'event-card';
-        card.innerHTML = `<img src='${ev.image||"https://picsum.photos/300/200"}' alt=''><h3>${pac.name}</h3><p>${pac.description||''}</p><p><strong>Price: ₹${pac.price}</strong></p><div style="padding:10px"><button class="btn" onclick="window.location.href='payment.html'">Register</button></div>`;
-        container.appendChild(card);
-      });
-    } catch(e){ console.warn('Template loader error', e && e.message); }
-  })();
-</script>
+ 
