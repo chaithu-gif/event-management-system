@@ -4,395 +4,179 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard | Event Management</title>
-<link rel="stylesheet" href="css/style.css">
+
 <style>
-  body {
-    font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #111;
-    color: #fff;
-  }
-
-  .dashboard {
-    width: 90%;
-    margin: 50px auto;
-  }
-
-  h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #ffd54f;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  th, td {
-    padding: 12px 20px;
-    text-align: left;
-  }
-
-  th {
-    background: #ff9800;
-    color: #fff;
-  }
-
-  tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .btn {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    color: #fff;
-    transition: 0.3s;
-  }
-
-  .btn-edit {
-    background: #4caf50;
-  }
-
-  .btn-edit:hover {
-    background: #45a049;
-  }
-
-  .btn-delete {
-    background: #f44336;
-  }
-
-  .btn-delete:hover {
-    background: #e53935;
-  }
-
-  .add-event-form {
-    margin: 30px 0;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-  }
-
-  .add-event-form input, 
-  .add-event-form button {
-    padding: 10px;
-    margin: 5px 0;
-    width: 100%;
-    border-radius: 6px;
-    border: none;
-  }
-
-  .add-event-form button {
-    background: #ff9800;
-    color: #fff;
-    cursor: pointer;
-  }
-
-  .add-event-form button:hover {
-    background: #e68900;
-  }
-
+body {
+  font-family: Poppins, sans-serif;
+  background: #111;
+  color: #fff;
+  margin: 0;
+}
+.dashboard {
+  width: 90%;
+  margin: 40px auto;
+}
+h1 {
+  text-align: center;
+  color: #ffd54f;
+}
+.add-event-form {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+.add-event-form input,
+.add-event-form textarea,
+.add-event-form select,
+.add-event-form button {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: none;
+}
+button {
+  background: #ff9800;
+  color: #fff;
+  cursor: pointer;
+}
+button:hover {
+  background: #e68900;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 12px;
+}
+th {
+  background: #ff9800;
+}
+tr:nth-child(even) {
+  background: rgba(255,255,255,0.05);
+}
+.btn {
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-edit {
+  background: #4caf50;
+}
+.btn-delete {
+  background: #f44336;
+}
 </style>
 </head>
+
 <body>
-  <div class="dashboard">
-    <h1>Admin Dashboard</h1>
+<div class="dashboard">
+  <h1>Admin Dashboard</h1>
 
-    <!-- Add Event Form -->
-    <div class="add-event-form">
-      <h3>Add Event</h3>
-      <input id="eventName" placeholder="Event title">
-      <input id="eventImage" placeholder="Image URL">
-      <input id="eventDate" type="date">
-      <input id="eventLocation" placeholder="Location / Venue">
-      <input id="eventCapacity" type="number" placeholder="Capacity">
-      <input id="eventPrice" type="number" placeholder="Price (0 for free)">
-      <select id="eventCategory">
-        <option value="">Select category / template</option>
-        <option value="wedding">Wedding</option>
-        <option value="beach-wedding">Beach Wedding</option>
-        <option value="birthday">Birthday</option>
-        <option value="corporate">Corporate</option>
-        <option value="seminar">Seminar</option>
-        <option value="others">Other</option>
-      </select>
-      <textarea id="eventDescription" placeholder="Description"></textarea>
-      <div id="packagesList">No packages added</div>
-      <button id="btnAddPackage" class="btn">Add Package</button>
-      <button id="btnClearPackages" class="btn ghost">Clear Packages</button>
-      <button onclick="addEvent()" class="btn">Create Event</button>
-    </div>
-          <button class="btn ghost" id="btnClearPackages" type="button">Clear Packages</button>
-        </div>
-      </div>
-      <button onclick="addEvent()">Add Event</button>
-    </div>
-
-    <!-- Events Table -->
-    <table id="eventsTable">
-      <thead>
-        <tr>
-          <th>Event Name</th>
-          <th>Image</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Existing events -->
-        <tr>
-          <td>Weddings</td>
-          <td><img src="https://th.bing.com/th/id/OIP.PYZMdjrNsV2vfb9XfP6ywwHaEK?w=229&h=180&c=7&r=0&o=7&cb=ucfimg2&dpr=1.3&pid=1.7&rm=3&ucfimg=1" width="100"></td>
-          <td>
-            <button class="btn btn-edit">Edit</button>
-            <button class="btn btn-delete">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Birthday Parties</td>
-          <td><img src="https://th.bing.com/th/id/OIP.DAFmIz6XFblUuCZUW1GZ7wHaHY?w=127&h=180&c=7&r=0&o=7&cb=ucfimg2&dpr=1.3&pid=1.7&rm=3&ucfimg=1" width="100"></td>
-          <td>
-            <button class="btn btn-edit">Edit</button>
-            <button class="btn btn-delete">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- ADD EVENT -->
+  <div class="add-event-form">
+    <h3>Add Event</h3>
+    <input id="eventName" placeholder="Event Name">
+    <input id="eventImage" placeholder="Image URL">
+    <input id="eventDate" type="date">
+    <input id="eventLocation" placeholder="Location">
+    <input id="eventCapacity" type="number" placeholder="Capacity">
+    <input id="eventPrice" type="number" placeholder="Price">
+    <select id="eventCategory">
+      <option value="">Select Category</option>
+      <option value="Wedding">Wedding</option>
+      <option value="Birthday">Birthday</option>
+      <option value="Corporate">Corporate</option>
+      <option value="Seminar">Seminar</option>
+    </select>
+    <textarea id="eventDescription" placeholder="Description"></textarea>
+    <button onclick="addEvent()">Create Event</button>
   </div>
 
-  <script>
-    const eventsTable = document.getElementById('eventsTable').getElementsByTagName('tbody')[0];
-    // API base: when page is opened via file://, use localhost backend; otherwise use same origin
-    const API_BASE = (location.protocol === 'file:') ? 'http://localhost:5000' : (location.origin || 'http://localhost:5000');
-    const API_EVENTS = API_BASE + '/api/events';
+  <!-- EVENTS TABLE -->
+  <table>
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="eventsTable"></tbody>
+  </table>
+</div>
 
-    function makeAdminHeaders(secret, json = true) {
-      const h = {};
-      if (json) h['Content-Type'] = 'application/json';
-      if (secret) h['x-admin-secret'] = secret;
-      return h;
-    }
-    // Load events from server and render into admin table so admin sees all server-stored events
-    async function loadServerEvents(){
-      try {
-        const url = API_EVENTS;
-        console.debug('[ADMIN] GET', url);
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Network response not ok');
-        const data = await res.json();
-        // clear current rows
-        eventsTable.innerHTML = '';
-        data.forEach(ev => {
-          const row = eventsTable.insertRow();
-          row.dataset.id = ev._id;
-          const titleCell = row.insertCell();
-          const imgCell = row.insertCell();
-          const actionsCell = row.insertCell();
-          const titleHtml = `<div style="display:flex;flex-direction:column"><strong>${ev.title}</strong>${ev.packages && ev.packages.length ? '<small style="color:var(--muted);margin-top:6px">Packages: ' + ev.packages.map(p=>p.name + ' (₹'+p.price+')').join(', ') + '</small>' : ''}</div>`;
-          titleCell.innerHTML = titleHtml;
-          imgCell.innerHTML = `<img src="${ev.image || 'https://picsum.photos/seed/'+(ev._id||Math.random())+'/120/80'}" width="100">`;
-          actionsCell.innerHTML = `
-            <button class="btn btn-edit" onclick="editEvent(this)">Edit</button>
-            <button class="btn btn-delete" onclick="deleteEvent(this)">Delete</button>
-          `;
-        });
-      } catch (e) {
-        console.warn('Could not load server events', e.message);
-        // keep the hardcoded demo rows if server unavailable
-      }
-    }
+<script>
+let events = JSON.parse(localStorage.getItem("events")) || [];
+const table = document.getElementById("eventsTable");
 
-    // call loader on open so admin sees server-side events
-    loadServerEvents();
-    let _packages = [];
+function saveEvents() {
+  localStorage.setItem("events", JSON.stringify(events));
+}
 
-    function renderPackagesUI(){
-      const el = document.getElementById('packagesList');
-      if (!_packages.length) { el.innerHTML = 'No packages added'; return; }
-      el.innerHTML = _packages.map((p,i)=>`<div style="margin-bottom:6px">${i+1}. <strong>${p.name}</strong> — ₹${p.price} <span style="color:var(--muted);display:block">${p.description||''}</span></div>`).join('');
-    }
+function renderEvents() {
+  table.innerHTML = "";
+  events.forEach((e, i) => {
+    const row = table.insertRow();
+    row.innerHTML = `
+      <td><strong>${e.name}</strong><br><small>${e.category}</small></td>
+      <td><img src="${e.image}" width="120"></td>
+      <td>
+        <button class="btn btn-edit" onclick="editEvent(${i})">Edit</button>
+        <button class="btn btn-delete" onclick="deleteEvent(${i})">Delete</button>
+      </td>
+    `;
+  });
+}
 
-    document.getElementById('btnAddPackage').addEventListener('click', ()=>{
-      const name = prompt('Package name:');
-      if (!name) return;
-      const price = Number(prompt('Price (number):')||0);
-      const desc = prompt('Short description (optional):') || '';
-      _packages.push({ name, price, description: desc });
-      renderPackagesUI();
-    });
+function addEvent() {
+  const event = {
+    name: eventName.value,
+    image: eventImage.value,
+    date: eventDate.value,
+    location: eventLocation.value,
+    capacity: eventCapacity.value,
+    price: eventPrice.value,
+    category: eventCategory.value,
+    description: eventDescription.value
+  };
 
-    document.getElementById('btnClearPackages').addEventListener('click', ()=>{ if(confirm('Clear all packages?')){ _packages=[]; renderPackagesUI(); }});
+  if (!event.name || !event.image) {
+    alert("Please fill required fields");
+    return;
+  }
 
-    async function addEvent() {
-      const name = document.getElementById('eventName').value;
-      const image = document.getElementById('eventImage').value;
+  events.push(event);
+  saveEvents();
+  renderEvents();
+  clearForm();
+  alert("Event added successfully!");
+}
 
-      if (!name || !image) { alert('Please fill in both fields'); return; }
+function editEvent(index) {
+  const e = events[index];
+  const newName = prompt("Edit Event Name", e.name);
+  if (!newName) return;
+  e.name = newName;
+  saveEvents();
+  renderEvents();
+}
 
-      const dateVal = document.getElementById('eventDate').value || new Date().toISOString();
-      const locationVal = document.getElementById('eventLocation').value || '';
-      const capacityVal = Number(document.getElementById('eventCapacity').value || 0);
-      const descVal = document.getElementById('eventDescription').value || '';
+function deleteEvent(index) {
+  if (!confirm("Delete this event?")) return;
+  events.splice(index, 1);
+  saveEvents();
+  renderEvents();
+}
 
-      const priceVal = Number(document.getElementById('eventPrice').value || 0);
-      const categoryVal = document.getElementById('eventCategory').value || '';
-      const payload = { title: name, image, date: dateVal, location: locationVal, capacity: capacityVal, description: descVal, price: priceVal, category: categoryVal, packages: _packages };
+function clearForm() {
+  document.querySelectorAll(".add-event-form input, textarea, select")
+    .forEach(el => el.value = "");
+}
 
-      // 3 attempts to enter correct admin secret
-      for (let attempt = 1; attempt <= 3; attempt++) {
-        const adminSecret = prompt(`[Attempt ${attempt}/3] Enter admin secret to publish event:\n(or press Cancel to add locally)`);
-        if (adminSecret === null) break; // user clicked Cancel
-        if (!adminSecret) { alert('Please enter a secret or Cancel'); attempt--; continue; }
-
-        try {
-          const url = API_EVENTS;
-          console.debug('[ADMIN] POST', url, 'payload:', payload, 'secretProvided:', !!adminSecret);
-          const res = await fetch(url, {
-            method: 'POST',
-            headers: makeAdminHeaders(adminSecret, true),
-            body: JSON.stringify(payload)
-          });
-          if (res.ok) {
-            const ev = await res.json();
-            const newRow = eventsTable.insertRow();
-            newRow.dataset.id = ev._id;
-            newRow.innerHTML = `
-              <td>${ev.title}</td>
-              <td><img src="${ev.image || image}" width="100"></td>
-              <td>
-                <button class="btn btn-edit" onclick="editEvent(this)">Edit</button>
-                <button class="btn btn-delete" onclick="deleteEvent(this)">Delete</button>
-              </td>
-            `;
-            document.getElementById('eventName').value = '';
-            document.getElementById('eventDate').value = '';
-            document.getElementById('eventLocation').value = '';
-            document.getElementById('eventCapacity').value = '';
-            document.getElementById('eventPrice').value = '';
-            document.getElementById('eventCategory').value = '';
-            document.getElementById('eventDescription').value = '';
-            document.getElementById('eventImage').value = '';
-            _packages = [];
-            renderPackagesUI();
-            alert('✓ Event published to server successfully!');
-            return;
-          }
-          const txt = await res.text();
-          alert(`Attempt ${attempt} failed: ${txt}`);
-        } catch (e) {
-          console.warn('Fetch error on attempt', attempt, e.message);
-          alert(`Attempt ${attempt} failed: Could not reach server`);
-        }
-      }
-
-      // After 3 failed attempts or user cancelled, offer fallback
-      const fallback = confirm('Could not publish to server. Add event locally (demo only)?');
-      if (!fallback) return;
-
-      // Add locally
-      const newRow = eventsTable.insertRow();
-      newRow.innerHTML = `
-        <td>${name}</td>
-        <td><img src="${image}" width="100"></td>
-        <td>
-          <button class="btn btn-edit" onclick="editEvent(this)">Edit</button>
-          <button class="btn btn-delete" onclick="deleteEvent(this)">Delete</button>
-        </td>
-      `;
-      document.getElementById('eventName').value = '';
-      document.getElementById('eventImage').value = '';
-      alert('Event added locally (demo). NOT synced to server or customer dashboard.');
-    }
-
-    async function editEvent(btn) {
-      const row = btn.parentElement.parentElement;
-      const serverId = row.dataset.id;
-      const currentTitle = row.cells[0].innerText || '';
-      const currentImg = row.cells[1].getElementsByTagName('img')[0].src || '';
-
-      const newTitle = prompt('Edit Event Title:', currentTitle);
-      const newImage = prompt('Edit Image URL:', currentImg);
-
-      if (!serverId) {
-        // local-only row — just update DOM
-        if (newTitle) row.cells[0].innerText = newTitle;
-        if (newImage) row.cells[1].getElementsByTagName('img')[0].src = newImage;
-        return;
-      }
-
-      // Server-backed row — 3 attempts for correct secret
-      const payload = {};
-      if (newTitle) payload.title = newTitle;
-      if (newImage) payload.image = newImage;
-
-      for (let attempt = 1; attempt <= 3; attempt++) {
-        const adminSecret = prompt(`[Attempt ${attempt}/3] Enter admin secret to update event:\n(or press Cancel to skip)`);
-        if (adminSecret === null) return; // user cancelled
-        if (!adminSecret) { alert('Please enter a secret or Cancel'); attempt--; continue; }
-
-        try {
-          const url = API_EVENTS + '/' + encodeURIComponent(serverId);
-          console.debug('[ADMIN] PUT', url, 'payload:', payload, 'secretProvided:', !!adminSecret);
-          const res = await fetch(url, {
-            method: 'PUT',
-            headers: makeAdminHeaders(adminSecret, true),
-            body: JSON.stringify(payload)
-          });
-          if (!res.ok) {
-            const txt = await res.text();
-            alert(`Attempt ${attempt} failed: ${txt}`);
-            continue;
-          }
-          await loadServerEvents();
-          alert('✓ Event updated on server');
-          return;
-        } catch (e) {
-          console.warn('Update failed on attempt', attempt, e.message);
-          alert(`Attempt ${attempt} failed: Could not reach server`);
-        }
-      }
-      alert('Could not update event after 3 attempts.');
-    }
-
-    async function deleteEvent(btn) {
-      if (!confirm('Are you sure you want to delete this event?')) return;
-      const row = btn.parentElement.parentElement;
-      const serverId = row.dataset.id;
-      if (!serverId) { row.remove(); return; }
-
-      // Server-backed row — 3 attempts for correct secret
-      for (let attempt = 1; attempt <= 3; attempt++) {
-        const adminSecret = prompt(`[Attempt ${attempt}/3] Enter admin secret to delete event:\n(or press Cancel to skip)`);
-        if (adminSecret === null) return; // user cancelled
-        if (!adminSecret) { alert('Please enter a secret or Cancel'); attempt--; continue; }
-
-        try {
-          const url = API_EVENTS + '/' + encodeURIComponent(serverId);
-          console.debug('[ADMIN] DELETE', url, 'secretProvided:', !!adminSecret);
-          const res = await fetch(url, {
-            method: 'DELETE',
-            headers: makeAdminHeaders(adminSecret, false)
-          });
-          if (!res.ok) { 
-            const txt = await res.text(); 
-            alert(`Attempt ${attempt} failed: ${txt}`);
-            continue;
-          }
-          row.remove();
-          alert('✓ Event deleted from server');
-          return;
-        } catch (e) {
-          console.warn('Delete failed on attempt', attempt, e.message);
-          alert(`Attempt ${attempt} failed: Could not reach server`);
-        }
-      }
-      alert('Could not delete event after 3 attempts.');
-    }
-  </script>
+renderEvents();
+</script>
 </body>
 </html>
