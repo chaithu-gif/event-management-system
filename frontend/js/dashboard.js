@@ -1,11 +1,7 @@
 // js/dashboard.js
 // Shows events, handles registration, Razorpay demo and storing regs in localStorage
-document.addEventListener('DOMContentLoaded', () => {
-  const EVENTS = [
-    {id:1,title:'Music Night',date:'2025-11-12',venue:'Arena',price:299,image:'https://picsum.photos/seed/music/600/400'},
-    {id:2,title:'Tech Meetup',date:'2025-11-05',venue:'Hall A',price:0,image:'https://picsum.photos/seed/tech/600/400'},
-    {id:3,title:'Art Workshop',date:'2025-12-01',venue:'Studio',price:199,image:'https://picsum.photos/seed/art/600/400'}
-  ];
+document.addEventListener('DOMContentLoaded', async () => {
+  let EVENTS = [];
 
   const eventsGrid = document.getElementById('eventsGrid');
   const regsList = document.getElementById('registeredList');
@@ -25,12 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
     EVENTS.forEach(ev=>{
       const card = document.createElement('div');
       card.className = 'event-card card';
+      const shortDesc = ev.description ? (ev.description.length > 120 ? ev.description.slice(0,120) + '…' : ev.description) : '';
       card.innerHTML = `
         <img src="${ev.image}" alt="">
         <div class="event-meta">
-          <div><div class="title">${ev.title}</div><div style="font-size:12px;color:var(--muted)">${ev.date} • ${ev.venue}</div></div>
+          <div>
+            <div class="title">${ev.title}</div>
+            <div style="font-size:12px;color:var(--muted)">${ev.date} • ${ev.venue}${ev.capacity? ' • Capacity '+ev.capacity:''}</div>
+          </div>
           <div class="price">${ev.price? '₹'+ev.price:'Free'}</div>
         </div>
+        <div style="margin-top:6px;color:var(--muted);font-size:14px">${shortDesc}</div>
+        ${ev.packages && ev.packages.length ? `<div style="margin-top:8px;color:#e6eefc"><strong>Packages</strong><ul style="margin:6px 0 0 18px;color:var(--muted)">${ev.packages.map(p=>`<li>${p.name} — ₹${p.price}${p.description? ' • '+p.description:''}</li>`).join('')}</ul></div>` : ''}
         <div style="margin-top:8px;display:flex;gap:8px">
           <button class="btn register" data-id="${ev.id}">Register</button>
           <button class="btn ghost view" data-id="${ev.id}">View</button>
@@ -39,7 +41,50 @@ document.addEventListener('DOMContentLoaded', () => {
       eventsGrid.appendChild(card);
     });
   }
-  renderEvents();
+  
+  async function loadEvents(){
+    try {
+      const res = await fetch('/api/events');
+      if (!res.ok) throw new Error('Network response not ok');
+      const data = await res.json();
+      EVENTS = data.map(ev => ({
+          id: ev._id || ev.id,
+          title: ev.title,
+          date: ev.date ? new Date(ev.date).toISOString().split('T')[0] : '',
+          venue: ev.location || ev.venue || '',
+          price: ev.price || 0,
+          image: ev.image || ('https://picsum.photos/seed/' + (ev._id||ev.id||Math.random()) + '/600/400'),
+          description: ev.description || '',
+          capacity: ev.capacity || 0,
+          packages: ev.packages || [],
+          category: ev.category || ''
+      }));
+      renderEvents();
+    } catch (e) {
+      console.warn('Could not load events from API, falling back to sample data.', e.message);
+      // fallback sample
+      EVENTS = [
+        {id:1,title:'Music Night',date:'2025-11-12',venue:'Arena',price:299,image:'https://picsum.photos/seed/music/600/400'},
+        {id:2,title:'Tech Meetup',date:'2025-11-05',venue:'Hall A',price:0,image:'https://picsum.photos/seed/tech/600/400'},
+        {id:3,title:'Art Workshop',date:'2025-12-01',venue:'Studio',price:199,image:'https://picsum.photos/seed/art/600/400'}
+      ];
+      renderEvents();
+    }
+  }
+
+  await loadEvents();
+
+  // socket.io: refresh events when server notifies changes
+  try {
+    if (window.io) {
+      const socket = io();
+      socket.on('connect', () => console.log('Connected to events socket'));
+      socket.on('eventsUpdated', (msg) => {
+        console.log('eventsUpdated received', msg);
+        loadEvents();
+      });
+    }
+  } catch (e) { console.warn('Socket error', e.message); }
 
   // load registrations
   function loadRegs(){
@@ -63,8 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // register handler
   document.body.addEventListener('click', (e)=>{
     if (e.target.matches('.register')) {
-      const id = Number(e.target.dataset.id);
-      const ev = EVENTS.find(x=>x.id===id);
+      const id = e.target.dataset.id;
+      const ev = EVENTS.find(x=>String(x.id)===String(id));
       openModal(`
         <h3>${ev.title}</h3>
         <p>${ev.date} • ${ev.venue}</p>
@@ -114,9 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (e.target.matches('.view')) {
-      const id = Number(e.target.dataset.id);
-      const ev = EVENTS.find(x=>x.id===id);
-      openModal(`<h3>${ev.title}</h3><img src="${ev.image}" style="width:100%;border-radius:8px"><p>${ev.date} • ${ev.venue}</p><div style="text-align:right"><button class="btn" onclick="document.getElementById('modalRoot').style.display='none'">Close</button></div>`);
+      const id = e.target.dataset.id;
+      const ev = EVENTS.find(x=>String(x.id)===String(id));
+      if (ev && ev.category) {
+        // if category corresponds to a template page, open that page with ?id=<eventId>
+        window.location.href = `${ev.category}.html?id=${encodeURIComponent(ev.id)}`;
+        return;
+      }
+      const pkgHtml = ev.packages && ev.packages.length ? `<h4>Packages</h4><ul style="color:var(--muted)">${ev.packages.map(p=>`<li>${p.name} — ₹${p.price}${p.description? ' • '+p.description:''}</li>`).join('')}</ul>` : '';
+      openModal(`<h3>${ev.title}</h3><img src="${ev.image}" style="width:100%;border-radius:8px"><p style="margin:6px 0;color:var(--muted)">${ev.date} • ${ev.venue}${ev.location? ' • '+ev.location:''}</p><p style="color:#e6eefc">${ev.description||''}</p>${pkgHtml}<div style="text-align:right"><button class="btn" onclick="document.getElementById('modalRoot').style.display='none'">Close</button></div>`);
     }
   });
 

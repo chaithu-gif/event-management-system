@@ -2,9 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const path = require('path');
+const http = require('http');
+const socketModule = require('./socket');
 
-// Load environment variables
-dotenv.config();
+// Load environment variables from backend/.env (ensure correct path when started from workspace root)
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -26,7 +29,8 @@ app.use((req, res, next) => {
 app.use(cors({
     origin: "*",  // allow frontend (localhost:5500)
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+   // include custom admin header so browser preflight allows it
+   allowedHeaders: ["Content-Type", "Authorization", "x-admin-secret", "x-auth-token"],
     credentials: false
 }));
 
@@ -43,6 +47,11 @@ app.use(express.urlencoded({ extended: true, limit: '5mb' }));
    4. STATIC FILES (Optional)
 ============================================================ */
 app.use(express.static('public'));
+
+// Mount events route
+app.use('/api/events', require('./routes/event'));
+// Debug routes for troubleshooting headers/auth
+app.use('/api/debug', require('./routes/debug'));
 
 /* ============================================================
    5. API ROUTES
@@ -69,11 +78,19 @@ mongoose.connect(process.env.MONGO_URI, {
     console.log("MongoDB connected");
     console.log("JWT_SECRET loaded:", process.env.JWT_SECRET ? "YES" : "NO");
 
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-        console.log("====================================================");
-        console.log(" BACKEND IS LIVE — LOGIN + SIGNUP WILL NOW WORK ");
-        console.log("====================================================");
-    });
+   // create http server and attach socket.io
+   const server = http.createServer(app);
+   try {
+      socketModule.init(server);
+   } catch (e) {
+      console.warn('Socket init warning:', e.message);
+   }
+
+   server.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log("====================================================");
+      console.log(" BACKEND IS LIVE — LOGIN + SIGNUP WILL NOW WORK ");
+      console.log("====================================================");
+   });
 })
 .catch(err => console.error("MongoDB connection error:", err));

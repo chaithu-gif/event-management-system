@@ -1,0 +1,61 @@
+﻿{
+    "value":  [
+                  {
+                      "_id":  "6935bca8070d3e4256da37df",
+                      "title":  "TEST EVENT (assistant)",
+                      "description":  "Created by assistant via POST",
+                      "location":  "Automation Hall",
+                      "category":  "wedding",
+                      "image":  "",
+                      "price":  149.99,
+                      "date":  "2025-12-10T17:43:04.480Z",
+                      "capacity":  50,
+                      "packages":  [
+                                       {
+                                           "name":  "Silver",
+                                           "price":  49,
+                                           "description":  "Silver package",
+                                           "_id":  "6935bca8070d3e4256da37e0"
+                                       },
+                                       {
+                                           "name":  "Gold",
+                                           "price":  149,
+                                           "description":  "Gold package",
+                                           "_id":  "6935bca8070d3e4256da37e1"
+                                       }
+                                   ],
+                      "createdBy":  null,
+                      "createdAt":  "2025-12-07T17:43:04.638Z",
+                      "__v":  0
+                  },
+                  {
+                      "_id":  "6935bc85070d3e4256da37db",
+                      "title":  "TEST EVENT (automated)",
+                      "description":  "This is a test event created by the assistant",
+                      "location":  "Test Venue",
+                      "category":  "wedding",
+                      "image":  "",
+                      "price":  199.99,
+                      "date":  "2025-12-14T17:42:29.277Z",
+                      "capacity":  100,
+                      "packages":  [
+                                       {
+                                           "name":  "Basic",
+                                           "price":  99,
+                                           "description":  "Basic package",
+                                           "_id":  "6935bc85070d3e4256da37dc"
+                                       },
+                                       {
+                                           "name":  "Premium",
+                                           "price":  199,
+                                           "description":  "Premium package",
+                                           "_id":  "6935bc85070d3e4256da37dd"
+                                       }
+                                   ],
+                      "createdBy":  null,
+                      "createdAt":  "2025-12-07T17:42:29.405Z",
+                      "__v":  0
+                  }
+              ],
+    "Count":  2
+}
