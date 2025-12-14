@@ -1,16 +1,15 @@
 (async () => {
   const BASE_URL = "http://localhost:5000/api/user";
 
-  // Helper to show messages
   function showMessage(el, msg, color = "red") {
     el.style.color = color;
     el.textContent = msg;
   }
 
-  // ========================= SIGNUP =========================
-  const doSignupBtn = document.getElementById("doSignup");
-  if (doSignupBtn) {
-    doSignupBtn.addEventListener("click", async (e) => {
+  /* ====================== SIGNUP ====================== */
+  const signupForm = document.getElementById("signupForm");
+  if (signupForm) {
+    signupForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const name = document.getElementById("name").value.trim();
@@ -32,20 +31,28 @@
 
         const data = await res.json();
 
-        if (res.ok) {
-          showMessage(msg, "Signup successful! Redirecting...", "#7c5cff");
-
-          // Save login data
-          localStorage.setItem("es_token", data.token);
-          localStorage.setItem("user_id", data.user.id);
-          localStorage.setItem("user_name", data.user.name);
-          localStorage.setItem("user_email", data.user.email);
-
-          // Always redirect to customer-dashboard
-          setTimeout(() => (window.location.href = "customer-dashboard.html"), 800);
-        } else {
+        if (!res.ok) {
           showMessage(msg, data.msg || "Signup failed");
+          return;
         }
+
+        // Save auth data
+        localStorage.setItem("es_token", data.token);
+        localStorage.setItem(
+          "es_user",
+          JSON.stringify({
+            id: data.user.id,
+            name: data.user.name,
+            email: data.user.email,
+            role: "customer",
+          })
+        );
+
+        showMessage(msg, "Signup successful! Redirecting...", "#7c5cff");
+        setTimeout(() => {
+          window.location.href = "customer-dashboard.html";
+        }, 800);
+
       } catch (err) {
         console.error(err);
         showMessage(msg, "Server error");
@@ -53,14 +60,14 @@
     });
   }
 
-  // ========================= LOGIN =========================
-  const doLoginBtn = document.getElementById("doLogin");
-  if (doLoginBtn) {
-    doLoginBtn.addEventListener("click", async (e) => {
+  /* ====================== LOGIN ====================== */
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
       const msg = document.getElementById("loginMsg");
 
       if (!email || !password) {
@@ -77,21 +84,28 @@
 
         const data = await res.json();
 
-        if (res.ok) {
-          showMessage(msg, "Login successful! Redirecting...", "#7c5cff");
-
-          // Save login data
-          localStorage.setItem("es_token", data.token);
-          localStorage.setItem("user_id", data.user.id);
-          localStorage.setItem("user_name", data.user.name);
-          localStorage.setItem("user_email", data.user.email);
-
-          // Always redirect customer
-          setTimeout(() => (window.location.href = "customer-dashboard.html"), 800);
-
-        } else {
-          showMessage(msg, data.msg || "Invalid credentials");
+        if (!res.ok) {
+          showMessage(msg, data.msg || "Invalid email or password");
+          return;
         }
+
+        // Save auth data (IMPORTANT)
+        localStorage.setItem("es_token", data.token);
+        localStorage.setItem(
+          "es_user",
+          JSON.stringify({
+            id: data.user.id,
+            name: data.user.name,
+            email: data.user.email,
+            role: "customer",
+          })
+        );
+
+        showMessage(msg, "Login successful! Redirecting...", "#7c5cff");
+        setTimeout(() => {
+          window.location.href = "customer-dashboard.html";
+        }, 800);
+
       } catch (err) {
         console.error(err);
         showMessage(msg, "Server error");
