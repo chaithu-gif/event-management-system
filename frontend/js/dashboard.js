@@ -183,3 +183,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (togg) togg.addEventListener('click', ()=> document.body.classList.toggle('dark-mode'));
 
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      // Clear stored user/session data
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // Redirect to home page
+      window.location.href = "index.html";
+    });
+  }
+});
+
