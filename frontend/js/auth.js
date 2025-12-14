@@ -1,5 +1,6 @@
 (async () => {
-  const BASE_URL = "http://localhost:5000/api/user";
+  // ✅ FIXED: must match backend route (server.js uses /api/auth)
+  const BASE_URL = "http://localhost:5000/api/auth";
 
   function showMessage(el, msg, color = "red") {
     el.style.color = color;
@@ -54,7 +55,7 @@
         }, 800);
 
       } catch (err) {
-        console.error(err);
+        console.error("SIGNUP ERROR:", err);
         showMessage(msg, "Server error");
       }
     });
@@ -89,7 +90,7 @@
           return;
         }
 
-        // Save auth data (IMPORTANT)
+        // Save auth data
         localStorage.setItem("es_token", data.token);
         localStorage.setItem(
           "es_user",
@@ -107,7 +108,7 @@
         }, 800);
 
       } catch (err) {
-        console.error(err);
+        console.error("LOGIN ERROR:", err);
         showMessage(msg, "Server error");
       }
     });
